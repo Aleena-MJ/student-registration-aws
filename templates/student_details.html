@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block title %}Student Details - {{ student['full_name'] }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10 col-xl-9">
+        
+        <!-- Navigation Breadcrumb -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <a href="{{ url_for('students') }}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left me-1"></i> Back to Student Directory
+            </a>
+            <div class="d-flex gap-2">
+                <a href="{{ url_for('edit_student', id=student['id']) }}" class="btn btn-warning">
+                    <i class="bi bi-pencil-square me-1"></i> Edit Student
+                </a>
+                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteDetailModal">
+                    <i class="bi bi-trash me-1"></i> Delete
+                </button>
+            </div>
+        </div>
+
+        <!-- Student Profile Card -->
+        <div class="card border-0 shadow-sm rounded-3 overflow-hidden mb-4">
+            <!-- Header Banner -->
+            <div class="card-header bg-primary text-white p-4">
+                <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="avatar-circle bg-white text-primary fw-bold d-flex align-items-center justify-content-center rounded-circle fs-3 shadow-sm" style="width: 64px; height: 64px;">
+                            {{ student['full_name'][0]|upper }}
+                        </div>
+                        <div>
+                            <h2 class="h3 fw-bold mb-0">{{ student['full_name'] }}</h2>
+                            <p class="mb-0 text-white-50">
+                                <span class="badge bg-light text-primary font-monospace me-2">{{ student['student_id'] }}</span>
+                                <span>{{ student['course'] }} &bull; {{ student['year'] }}</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="text-md-end text-white-50 small">
+                        <div><i class="bi bi-calendar3 me-1"></i> Registered On:</div>
+                        <div class="text-white fw-semibold">{{ student['created_at'] }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Body Details -->
+            <div class="card-body p-4">
+                <h5 class="fw-bold border-bottom pb-2 mb-3 text-dark">
+                    <i class="bi bi-info-circle me-1 text-primary"></i> Academic &amp; Personal Information
+                </h5>
+
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="p-3 bg-light rounded-3 h-100">
+                            <span class="text-muted small text-uppercase fw-semibold d-block mb-1">Student ID</span>
+                            <div class="fs-5 fw-bold text-dark font-monospace">{{ student['student_id'] }}</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="p-3 bg-light rounded-3 h-100">
+                            <span class="text-muted small text-uppercase fw-semibold d-block mb-1">Full Legal Name</span>
+                            <div class="fs-5 fw-bold text-dark">{{ student['full_name'] }}</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="p-3 bg-light rounded-3 h-100">
+                            <span class="text-muted small text-uppercase fw-semibold d-block mb-1">Email Address</span>
+                            <div class="fs-6 fw-semibold text-dark">
+                                <i class="bi bi-envelope text-primary me-1"></i>
+                                <a href="mailto:{{ student['email'] }}" class="text-decoration-none text-body">{{ student['email'] }}</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="p-3 bg-light rounded-3 h-100">
+                            <span class="text-muted small text-uppercase fw-semibold d-block mb-1">Phone Number</span>
+                            <div class="fs-6 fw-semibold text-dark">
+                                <i class="bi bi-telephone text-primary me-1"></i>
+                                <a href="tel:{{ student['phone'] }}" class="text-decoration-none text-body">{{ student['phone'] }}</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="p-3 bg-light rounded-3 h-100">
+                            <span class="text-muted small text-uppercase fw-semibold d-block mb-1">Date of Birth</span>
+                            <div class="fs-6 fw-semibold text-dark">
+                                <i class="bi bi-cake2 text-primary me-1"></i> {{ student['dob'] }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="p-3 bg-light rounded-3 h-100">
+                            <span class="text-muted small text-uppercase fw-semibold d-block mb-1">Gender</span>
+                            <div class="fs-6 fw-semibold text-dark">
+                                <i class="bi bi-gender-ambiguous text-primary me-1"></i> {{ student['gender'] }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="p-3 bg-light rounded-3 h-100">
+                            <span class="text-muted small text-uppercase fw-semibold d-block mb-1">Course / Program</span>
+                            <div class="fs-6 fw-bold text-primary">
+                                <i class="bi bi-journal-bookmark me-1"></i> {{ student['course'] }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="p-3 bg-light rounded-3 h-100">
+                            <span class="text-muted small text-uppercase fw-semibold d-block mb-1">Year of Study</span>
+                            <div class="fs-6 fw-semibold text-dark">
+                                <i class="bi bi-mortarboard me-1 text-primary"></i> {{ student['year'] }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="p-3 bg-light rounded-3">
+                            <span class="text-muted small text-uppercase fw-semibold d-block mb-1">Residential Address</span>
+                            <div class="text-dark">
+                                <i class="bi bi-geo-alt text-primary me-1"></i> {{ student['address'] }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete Confirmation Modal -->
+        <div class="modal fade" id="deleteDetailModal" tabindex="-1" aria-labelledby="deleteDetailModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title" id="deleteDetailModalLabel">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i> Delete Student Record
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body py-4">
+                        <p class="mb-2">Are you sure you want to permanently delete the record for:</p>
+                        <div class="card bg-light border p-3 my-2">
+                            <div class="fw-bold">{{ student['full_name'] }}</div>
+                            <div class="text-muted small">Student ID: {{ student['student_id'] }}</div>
+                        </div>
+                        <p class="text-danger small mb-0">This operation cannot be reversed.</p>
+                    </div>
+                    <div class="modal-footer bg-light">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <form action="{{ url_for('delete_student', id=student['id']) }}" method="POST" class="d-inline">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-trash me-1"></i> Yes, Delete
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

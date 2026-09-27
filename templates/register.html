@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block title %}Register Student - Student Registration System{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-9 col-xl-8">
+        <div class="card border-0 shadow-sm rounded-3">
+            <div class="card-header bg-primary text-white py-3">
+                <div class="d-flex align-items-center justify-content-between">
+                    <h4 class="mb-0 fw-bold">
+                        <i class="bi bi-person-plus-fill me-2"></i> Register New Student
+                    </h4>
+                    <a href="{{ url_for('students') }}" class="btn btn-sm btn-light text-primary fw-semibold">
+                        <i class="bi bi-arrow-left me-1"></i> Back to List
+                    </a>
+                </div>
+            </div>
+
+            <div class="card-body p-4">
+                <p class="text-muted small mb-4">
+                    Please fill out the form below to enroll a student into the system. All fields marked with <span class="text-danger">*</span> are mandatory.
+                </p>
+
+                <form action="{{ url_for('register') }}" method="POST" class="needs-validation" novalidate>
+                    <div class="row g-3">
+                        
+                        <!-- Student ID -->
+                        <div class="col-md-6">
+                            <label for="student_id" class="form-label fw-semibold">
+                                Student ID <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                                <input type="text" class="form-control" id="student_id" name="student_id" placeholder="e.g. STU-2026-001" value="{{ student.get('student_id', '') }}" required>
+                            </div>
+                            <div class="form-text small">Must be unique for each student.</div>
+                        </div>
+
+                        <!-- Full Name -->
+                        <div class="col-md-6">
+                            <label for="full_name" class="form-label fw-semibold">
+                                Full Name <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                <input type="text" class="form-control" id="full_name" name="full_name" placeholder="e.g. Jane Doe" value="{{ student.get('full_name', '') }}" required>
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="col-md-6">
+                            <label for="email" class="form-label fw-semibold">
+                                Email Address <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="e.g. jane.doe@example.com" value="{{ student.get('email', '') }}" required>
+                            </div>
+                            <div class="form-text small">Used for student correspondence.</div>
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div class="col-md-6">
+                            <label for="phone" class="form-label fw-semibold">
+                                Phone Number <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                                <input type="tel" class="form-control" id="phone" name="phone" placeholder="e.g. +1 555-0199 or 5550199" value="{{ student.get('phone', '') }}" required>
+                            </div>
+                        </div>
+
+                        <!-- Date of Birth -->
+                        <div class="col-md-6">
+                            <label for="dob" class="form-label fw-semibold">
+                                Date of Birth <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                <input type="date" class="form-control" id="dob" name="dob" value="{{ student.get('dob', '') }}" required>
+                            </div>
+                        </div>
+
+                        <!-- Gender -->
+                        <div class="col-md-6">
+                            <label for="gender" class="form-label fw-semibold">
+                                Gender <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-gender-ambiguous"></i></span>
+                                <select class="form-select" id="gender" name="gender" required>
+                                    <option value="" disabled {% if not student.get('gender') %}selected{% endif %}>Select Gender</option>
+                                    <option value="Male" {% if student.get('gender') == 'Male' %}selected{% endif %}>Male</option>
+                                    <option value="Female" {% if student.get('gender') == 'Female' %}selected{% endif %}>Female</option>
+                                    <option value="Other" {% if student.get('gender') == 'Other' %}selected{% endif %}>Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Course -->
+                        <div class="col-md-6">
+                            <label for="course" class="form-label fw-semibold">
+                                Course / Program <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-book"></i></span>
+                                <select class="form-select" id="course" name="course" required>
+                                    <option value="" disabled {% if not student.get('course') %}selected{% endif %}>Select Course</option>
+                                    <option value="Computer Science" {% if student.get('course') == 'Computer Science' %}selected{% endif %}>Computer Science</option>
+                                    <option value="Information Technology" {% if student.get('course') == 'Information Technology' %}selected{% endif %}>Information Technology</option>
+                                    <option value="Software Engineering" {% if student.get('course') == 'Software Engineering' %}selected{% endif %}>Software Engineering</option>
+                                    <option value="Data Science" {% if student.get('course') == 'Data Science' %}selected{% endif %}>Data Science</option>
+                                    <option value="Cyber Security" {% if student.get('course') == 'Cyber Security' %}selected{% endif %}>Cyber Security</option>
+                                    <option value="Business Administration" {% if student.get('course') == 'Business Administration' %}selected{% endif %}>Business Administration</option>
+                                    <option value="Electrical Engineering" {% if student.get('course') == 'Electrical Engineering' %}selected{% endif %}>Electrical Engineering</option>
+                                    <option value="Mechanical Engineering" {% if student.get('course') == 'Mechanical Engineering' %}selected{% endif %}>Mechanical Engineering</option>
+                                    <option value="Civil Engineering" {% if student.get('course') == 'Civil Engineering' %}selected{% endif %}>Civil Engineering</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Year of Study -->
+                        <div class="col-md-6">
+                            <label for="year" class="form-label fw-semibold">
+                                Year of Study <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-mortarboard"></i></span>
+                                <select class="form-select" id="year" name="year" required>
+                                    <option value="" disabled {% if not student.get('year') %}selected{% endif %}>Select Year Level</option>
+                                    <option value="1st Year" {% if student.get('year') == '1st Year' %}selected{% endif %}>1st Year (Freshman)</option>
+                                    <option value="2nd Year" {% if student.get('year') == '2nd Year' %}selected{% endif %}>2nd Year (Sophomore)</option>
+                                    <option value="3rd Year" {% if student.get('year') == '3rd Year' %}selected{% endif %}>3rd Year (Junior)</option>
+                                    <option value="4th Year" {% if student.get('year') == '4th Year' %}selected{% endif %}>4th Year (Senior)</option>
+                                    <option value="Post-Graduate" {% if student.get('year') == 'Post-Graduate' %}selected{% endif %}>Post-Graduate</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Residential Address -->
+                        <div class="col-12">
+                            <label for="address" class="form-label fw-semibold">
+                                Residential Address <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                                <textarea class="form-control" id="address" name="address" rows="3" placeholder="Enter complete home or campus address..." required>{{ student.get('address', '') }}</textarea>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Form Action Buttons -->
+                    <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
+                        <button type="reset" class="btn btn-outline-secondary px-4">
+                            <i class="bi bi-arrow-counterclockwise me-1"></i> Reset
+                        </button>
+                        <button type="submit" class="btn btn-primary px-4">
+                            <i class="bi bi-check2-circle me-1"></i> Complete Registration
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
